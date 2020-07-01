@@ -1,0 +1,25 @@
+﻿<Window x:Class="EasyBamlAddin.Views.OperationProgressView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Converters="clr-namespace:EasyBamlAddin.Tools.Converters" mc:Ignorable="d" ShowInTaskbar="False"
+             Title="{Binding WindowTitle}" Width="500" Height="180">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <Converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+    </Window.Resources>
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <TextBlock HorizontalAlignment="Left" Margin="10" Text="{Binding OperationDescription}" />
+            <TextBlock HorizontalAlignment="Left" Margin="10" Text="{Binding StepDescription}" />
+            <Border Height="10" Margin="10">
+                <ProgressBar HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                             IsIndeterminate="{Binding IsIndeterminate}"
+                             Minimum="0" Maximum="{Binding TotalSteps}" Value="{Binding CurrentStep}"
+                             Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            </Border>
+            <Button HorizontalAlignment="Right" Padding="10,0,10,0" Margin="10" Command="{Binding OKCommand}"
+                    IsEnabled="{Binding IsRunning, Converter={StaticResource InverseBooleanConverter}}">Close</Button>
+        </StackPanel>
+    </Grid>
+</Window>

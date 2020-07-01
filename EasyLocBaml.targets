@@ -1,0 +1,52 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Adds the build action 'LocBamlResxC' -->
+  <ItemGroup>
+    <AvailableItemName Include="LocBamlResx" />
+  </ItemGroup>
+
+  <Target Name="AssignLocBamlResxCulture"
+          Condition=" '@(LocBamlResx)' != '' and ('@(Page)' != '' or '@(ApplicationDefinition)' != '')">
+    <AssignCulture Files="@(LocBamlResx)">
+      <Output TaskParameter="AssignedFiles" ItemName="LocBamlResxC"/>
+    </AssignCulture>
+  </Target>
+  
+  <Target Name="GenerateLocalizedBamls"
+          Condition=" '@(LocBamlResx)' != '' and ('@(Page)' != '' or '@(ApplicationDefinition)' != '')"
+          DependsOnTargets="AssignLocBamlResxCulture" 
+          Inputs="@(LocBamlResx);$(IntermediateOutputPath)$(AssemblyName).g.resources;"
+          Outputs="$(IntermediateOutputPath)$(AssemblyName).g.%(LocBamlResxC.Culture).resources">
+    <!-- Locbaml needs the runtime assemblies in the intermediate dir -->
+    <!--<Copy SourceFiles="$(SolutionDir)BamlLocalization\EasyLocBaml.exe" DestinationFolder="$(IntermediateOutputPath)" />-->
+    <Copy SourceFiles="@(ReferenceCopyLocalPaths)" DestinationFiles="@(ReferenceCopyLocalPaths->'$(IntermediateOutputPath)%(DestinationSubDirectory)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+
+    <MakeDir Directories="$(IntermediateOutputPath)%(LocBamlResxC.Culture)" />
+
+    <!--<Exec Command='"$(SolutionDir)BamlLocalization\EasyLocBaml.exe" /generate "$(AssemblyName).g.$(UICulture).resources" /trans:"%(LocBamlResxC.FullPath)" /out:%(LocBamlResxC.Culture) /cul:%(LocBamlResxC.Culture) /mode:resx'
+          WorkingDirectory="$(IntermediateOutputPath)" Outputs="$(IntermediateOutputPath)%(LocBamlResxC.Culture)\%$(AssemblyName).g.$(UICulture).resources" />-->
+    <Exec Command='"$(SolutionDir)BamlLocalization\EasyLocBaml.exe" /generate "$(AssemblyName).g.resources" /trans:"%(LocBamlResxC.FullPath)" /out:. /cul:%(LocBamlResxC.Culture) /mode:resx'
+          WorkingDirectory="$(IntermediateOutputPath)" Outputs="$(IntermediateOutputPath)$(AssemblyName).g.%(LocBamlResxC.Culture).resources" />
+    <!--<Exec Command='LocBaml /generate "$(AssemblyName).g.$(UICulture).resources" /trans:"%(LocBamlResxC.FullPath)" /out:%(LocBamlResxC.Culture) /cul:%(LocBamlResxC.Culture)'
+          WorkingDirectory="$(IntermediateOutputPath)" Outputs="$(IntermediateOutputPath)%(LocBamlResxC.Culture)\$(AssemblyName).g.$(UICulture).resources" />-->
+    <!--<Delete Files="$(IntermediateOutputPath)\locbaml.exe" />-->
+
+    <!-- Add the new sattelite dll's to the list, so they are added to the manifest.-->
+    <ItemGroup>
+      <_SatelliteAssemblyResourceInputs Include="$(IntermediateOutputPath)$(AssemblyName).g.%(LocBamlResxC.Culture).resources">
+        <Culture>%(LocBamlResxC.Culture)</Culture>
+      </_SatelliteAssemblyResourceInputs>
+
+      <_SatelliteResourceFile Include="$(IntermediateOutputPath)$(AssemblyName).g.%(LocBamlResxC.Culture).resources"/>
+
+      <FileWrites Include="$(IntermediateOutputPath)$(AssemblyName).g.%(LocBamlResxC.Culture).resources"/>
+
+      <IntermediateSatelliteAssembliesWithTargetPath Include="$(IntermediateOutputPath)%(LocBamlResxC.Culture)\$(TargetName).resources.dll">
+        <Culture>%(LocBamlResxC.Culture)</Culture>
+        <TargetPath>%(LocBamlResxC.Culture)\$(TargetName).resources.dll</TargetPath>
+      </IntermediateSatelliteAssembliesWithTargetPath>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="AfterCompileWinFX" DependsOnTargets="GenerateLocalizedBamls"/>
+
+</Project>

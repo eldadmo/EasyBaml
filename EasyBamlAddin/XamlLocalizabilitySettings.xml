@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XamlLocalizabilitySettings>
+  <Elements>
+    <!--If Name or Namespace skipped, it will match ANY element-->
+    <Element IsContentLocalizable="true">
+      <Attributes>
+        <Attribute Name="Content"/>
+        <Attribute Name="ToolTip"/>
+        <Attribute Name="Text"/>
+        <Attribute Name="Header"/>
+        <Attribute Name="Title"/>
+      </Attributes>
+    </Element>
+    
+    <Element Name="KeyBinding" Namespace="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+      <Attributes>
+        <Attribute Name="Key"/>
+        <Attribute Name="Gesture"/>
+      </Attributes>
+    </Element>
+
+    <Element Name="Color" Namespace="http://schemas.microsoft.com/winfx/2006/xaml/presentation" IsContentLocalizable="false"/>
+    <Element Name="Geometry" Namespace="http://schemas.microsoft.com/winfx/2006/xaml/presentation" IsContentLocalizable="false"/>
+    <Element Name="FontFamily" Namespace="http://schemas.microsoft.com/winfx/2006/xaml/presentation" IsContentLocalizable="false"/>
+    <Element Name="Visibility" Namespace="http://schemas.microsoft.com/winfx/2006/xaml/presentation" IsContentLocalizable="false"/>
+  </Elements>
+</XamlLocalizabilitySettings>

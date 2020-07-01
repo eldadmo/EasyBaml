@@ -1,0 +1,62 @@
+﻿<Window x:Class="EasyBamlAddin.Views.ManageUidView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" ShowInTaskbar="False"
+             Title="{Binding WindowTitle}" Width="500" Height="400">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <TextBlock HorizontalAlignment="Left" Margin="10" Text="{Binding OperationDescription}" />
+            <TextBlock HorizontalAlignment="Left" Margin="10" Text="{Binding StepDescription}" />
+            <Border Height="10" Margin="10">
+                <ProgressBar HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                             IsIndeterminate="{Binding IsIndeterminate}"
+                             Minimum="0" Maximum="{Binding TotalSteps}" Value="{Binding CurrentStep}"
+                             Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            </Border>
+            
+          <StackPanel Orientation="Horizontal">
+            <Button Content="Check UIDs" Command="{Binding CheckUidsCommand}" HorizontalAlignment="Left" Margin="5,0" Padding="10,0"/>
+            <Button Content="Update UIDs" Command="{Binding UpdateUidsCommand}" HorizontalAlignment="Left" Margin="5,0" Padding="10,0"/>
+            <Button Content="Remove UIDs" Command="{Binding RemoveUidsCommand}" HorizontalAlignment="Left" Margin="5,0" Padding="10,0"/>
+          </StackPanel>
+          <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+             <Button Content="Update Translation Files" Command="{Binding UpdateTranslationFilesCommand}" HorizontalAlignment="Left" Margin="5,0" Padding="10,0"/>
+             <Button Content="Update UIDs &amp; Update Translation Files" Command="{Binding PrepareTranslationCommand}" 
+                  HorizontalAlignment="Left" Margin="5,0" Padding="10,0"/>
+          </StackPanel>
+
+            <ListBox ItemsSource="{Binding InvalidFiles}" Height="230" Margin="10">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding ProjectName}" Width="120"/>
+                                <TextBlock Text="{Binding ProjectPath}"/>
+                            </StackPanel>
+                            <ItemsControl ItemsSource="{Binding UidEntries}" Margin="10,0,0,0">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Line}" MinWidth="20"/>
+                                            <TextBlock Text="{Binding Column}" MinWidth="20"/>
+                                            <TextBlock Text="{Binding ElementName}" Width="100"/>
+                                            <TextBlock Text="{Binding Status}" Width="50"/>
+                                            <TextBlock Text="{Binding LocalizableString}"/>
+                                            <TextBlock Text="{Binding Value}"/>
+                                            <TextBlock Text="{Binding AttrName}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+    </Grid>
+</Window>

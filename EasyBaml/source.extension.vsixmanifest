@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+    <Metadata>
+        <Identity Id="EasyBaml.9ed70c3a-5ea2-479a-b085-41f36b0bbf2e" Version="1.1.1.0" Language="en-US" Publisher="Eldad Michaeli" />
+        <DisplayName>Easy BAML</DisplayName>
+        <Description xml:space="preserve">Helps to localizable XAMLs using BAML technics.</Description>
+        <ReleaseNotes>release-notes.txt</ReleaseNotes>
+        <Icon>Resources\EastBamlIcon.png</Icon>
+    </Metadata>
+    <Installation>
+        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0]" />
+        <InstallationTarget Version="[15.0,16.0)" Id="Microsoft.VisualStudio.Pro" />
+    </Installation>
+    <Dependencies>
+        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+        <Dependency Id="Microsoft.VisualStudio.MPF.15.0" DisplayName="Visual Studio MPF 15.0" d:Source="Installed" Version="[15.0]" />
+    </Dependencies>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,16.0)" DisplayName="Visual Studio core editor" />
+    </Prerequisites>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+        <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="EasyLocBaml" d:VsixSubPath="Build" Path="|EasyLocBaml|" AssemblyName="|EasyLocBaml;AssemblyName|" />
+        <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="%CurrentProject%Formats" d:VsixSubPath="Build" Path="|EasyBamlFormats|" AssemblyName="|EasyBamlFormats;AssemblyName|" />
+        <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="%CurrentProject%Formats" Path="|EasyBamlFormats|" AssemblyName="|EasyBamlFormats;AssemblyName|" />
+    </Assets>
+</PackageManifest>

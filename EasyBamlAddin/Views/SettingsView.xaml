@@ -1,0 +1,70 @@
+﻿<Window x:Class="EasyBamlAddin.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Behaviors="clr-namespace:EasyBamlAddin.Tools.Behaviors" xmlns:ViewModels="clr-namespace:EasyBamlAddin.ViewModels" xmlns:Domain="clr-namespace:EasyBamlAddin.Domain" mc:Ignorable="d" Title="Easy BAML - Solution settings"
+             SizeToContent="WidthAndHeight" ShowInTaskbar="False">
+    <Grid>
+        <StackPanel Orientation="Vertical" Margin="10">
+            <StackPanel Orientation="Horizontal">
+                <Label Width="130">Uid Generation Mode</Label>
+                <ComboBox SelectedItem="{Binding UidGenerationMode}" Width="100" Height="20">
+                    <x:Static Member="Domain:UidGenerationMode.Smart"/>
+                    <x:Static Member="Domain:UidGenerationMode.All"/>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Label Width="130">Default Language</Label>
+                <ComboBox ItemsSource="{Binding AllLanguages}" SelectedItem="{Binding DefaultLanguage}" 
+                          Width="100" Height="20"/>
+            </StackPanel>
+
+            <Label>Localization Languages</Label>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label>Available</Label>
+                <ListBox ItemsSource="{Binding AvailableLanguages}" Grid.Row="1"
+                         Height="160" SelectionMode="Extended" 
+                         Behaviors:ListBoxMultipleSelectionBehavior.Attach="True"
+                         Behaviors:ListBoxMultipleSelectionBehavior.SelectedItems="{Binding SelectedAvailableLanguages, Mode=OneWayToSource}"
+                         Behaviors:ListBoxMultipleSelectionBehavior.DoubleClickCommand="{Binding AddLanguagesCommand}"/>
+                <ListBox ItemsSource="{Binding SelectedLanguages}" Grid.Row="1" Grid.Column="2"
+                         Height="160" SelectionMode="Extended"
+                         Behaviors:ListBoxMultipleSelectionBehavior.Attach="True"
+                         Behaviors:ListBoxMultipleSelectionBehavior.SelectedItems="{Binding SelectedSelectedLanguages, Mode=OneWayToSource}"
+                         Behaviors:ListBoxMultipleSelectionBehavior.DoubleClickCommand="{Binding RemoveLanguagesCommand}"/>
+                <Label Grid.Column="2">Selected</Label>
+                <Button Content=">" Width="50" Command="{Binding AddLanguagesCommand}" 
+                        Grid.Column="1" Grid.Row="1" Margin="0,70,0,0" Padding="10,0,10,1" VerticalAlignment="Top"/>
+                <Button Content="&lt;" Width="50" Command="{Binding RemoveLanguagesCommand}" 
+                        Grid.Column="1" Grid.Row="1" Margin="0,100,0,0" Padding="10,0,10,1" VerticalAlignment="Top"/>
+            </Grid>
+
+            <Label>Localizable Projects</Label>
+            <Border BorderThickness="1" BorderBrush="Silver">
+                <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" Height="100" Padding="10">
+                    <ItemsControl ItemsSource="{Binding ProjectsSettings}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox Content="{Binding ProjectName}" IsChecked="{Binding Localizable}"
+                                      IsEnabled="{Binding IsWpfProject}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                <Button Content="Apply" Command="{Binding SaveCommand}" Width="70"/>
+                <Button Content="Cancel" IsCancel="True" Command="{Binding CancelCommand}" Width="70" Margin="10,0,0,0" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

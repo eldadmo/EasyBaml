@@ -1,0 +1,27 @@
+﻿<platformUi:DialogWindow x:Class="EasyBamlAddin.Views.MainWindowView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:platformUi="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.15.0"
+             mc:Ignorable="d" Title="Easy BAML" SizeToContent="WidthAndHeight" ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
+             d:DesignHeight="282" d:DesignWidth="386" MinWidth="300" MinHeight="250">
+    <Grid Margin="10" Height="213" Width="318">
+        <!--<Button Content="Manage UIDs..." HorizontalAlignment="Left" VerticalAlignment="Top"
+                Command="{Binding CheckUIDsCommand}"/>-->
+        
+        <TextBlock Text="v." VerticalAlignment="Bottom" HorizontalAlignment="Left" FontSize="10"/>
+        <TextBlock Text="{Binding VersionInfo}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="10"/>
+
+        <Button Content="Configure Solution..." HorizontalAlignment="Left" VerticalAlignment="Top"
+                Command="{Binding ShowSettingsCommand}" Margin="0,30,0,0" Padding="10,0,10,0"/>
+        <Button Content="Prepare Translation" HorizontalAlignment="Left" VerticalAlignment="Top"
+                Command="{Binding PrepareTranslationCommand}" Margin="0,134,0,0" Padding="10,0,10,0"/>
+        <TextBlock Height="68" HorizontalAlignment="Left" Margin="147,24,0,0" Text="Use this option when you need to select and configure localizable projects, and select supported languages" VerticalAlignment="Top" TextWrapping="Wrap"/>
+        <TextBlock Height="46" HorizontalAlignment="Left" Margin="147,134,0,0" Text="Use this option to update UIDs and update translation files" TextWrapping="Wrap" VerticalAlignment="Top" />
+
+        <Button Content="Close" HorizontalAlignment="Left" VerticalAlignment="Top"
+                Command="{Binding CloseCommand}" Margin="265,193,0,0" Padding="10,0,10,0"/>
+    </Grid>
+</platformUi:DialogWindow>
+
