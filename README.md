@@ -1,7 +1,7 @@
 # EasyBaml
 Easy language support for xaml
 ========================================================================
-Easy Baml 2017
+Easy Baml 2017 - 2019
 ========================================================================
 
 Implementation of BAML WPF localization approach in a user(WPF developer)-friendly and easy way.
@@ -32,7 +32,7 @@ includes improved stability and compilation time.
 ---------------------------------------------------------------------
 Release 1.0.9
 ---------------------------------------------------------------------
-Now supprot Visual Studio 2013 Addin.
+Now support Visual Studio 2013 Addin.
 
 ---------------------------------------------------------------------
 Release 1.1.0
